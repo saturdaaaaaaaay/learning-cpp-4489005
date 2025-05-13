@@ -91,7 +91,7 @@ float StudentRecords::get_GPA(int sid) const{
         if (grd.get_student_id() == sid){
             unsigned char current_credits = get_course_credits(grd.get_course_id());
             credits += current_credits;
-            points += get_num_grade(grd.get_grade()) * courses[j].get_credits();
+            points += get_num_grade(grd.get_grade()) * current_credits;
         }
     return points / credits;
 }
