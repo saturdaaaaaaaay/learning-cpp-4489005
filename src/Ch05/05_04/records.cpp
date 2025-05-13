@@ -1,4 +1,5 @@
 #include "records.h"
+#include <iostream>
 
 Student::Student(int the_id, std::string the_name){
     id = the_id;
@@ -78,6 +79,13 @@ std::string StudentRecords::get_student_name(int sid) const{
     return students[i].get_name();
 }
 
+std::string StudentRecords::get_course_name(int cid) const{
+    int i = 0;
+    while (i < courses.size() && courses[i].get_id() != cid)
+        i++;
+    return courses[i].get_name();
+}
+
 unsigned char StudentRecords::get_course_credits(int cid) const{
     int j = 0;
     while (j < courses.size() && courses[j].get_id() != cid)
@@ -94,4 +102,20 @@ float StudentRecords::get_GPA(int sid) const{
             points += get_num_grade(grd.get_grade()) * current_credits;
         }
     return (points / credits);
+}
+
+void StudentRecords::report_card(int sid) const{
+    std::string student_name = get_student_name(sid);
+    std::cout << "Student Name: " << student_name << std::endl;
+
+    for (auto grade : grades) {
+        if (grade.get_student_id() == sid) {
+            int course_id = grade.get_course_id();
+            std::string course_name = get_course_name(course_id);
+            std::cout << course_name << ": " << grade.get_grade() << std::endl;
+        }
+    }
+
+    float GPA = get_GPA(sid);
+    std::cout << "GPA: " << GPA << std::endl;
 }
