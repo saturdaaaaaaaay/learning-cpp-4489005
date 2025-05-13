@@ -21,14 +21,67 @@ int main(){
     std::vector<Grade> grades = {Grade(1, 1, 'B'), Grade(1, 2, 'A'), Grade(1, 3, 'C'),
                                 Grade(2, 1, 'A'), Grade(2, 2, 'A'), Grade(2, 4, 'B')};
 
-    std::cout << "Enter a student ID: " << std::flush;
-    std::cin >> id;
 
     // Calculate the GPA for the selected student.
-    // Write your code here
+    bool valid_student = false;
+    Student *selected_student;
+    do {
+        std::cout << "Enter a student ID: " << std::flush;
+        std::cin >> id;
+        
+        for (Student student : students) {
+            if (id == student.get_id()) {
+                selected_student = new Student(student.get_id(), student.get_name());
+                valid_student = true;
+                break;
+            }
+        }
+
+        if (!valid_student) {
+            std::cout << "Not a valid student ID. Try again." << std::endl;
+        }
+    } while (!valid_student);
+
+    float total_points = 0.0;
+    float total_credits = 0.0;
+    auto student_id = selected_student->get_id();
+    for (Grade grade : grades) {
+        if (grade.get_student_id() == student_id) {
+            for (Course course : courses) {
+                if (course.get_id() == grade.get_course_id()) {
+                    float points;
+                    switch (grade.get_grade()) {
+                        case 'A':
+                            points = 4.0;
+                            break;
+                        case 'B':
+                            points = 3.0;
+                            break;
+                        case 'C':
+                            points = 2.0;
+                            break;
+                        case 'D':
+                            points = 1.0;
+                            break;
+                        case 'F':
+                            points = 0.0;
+                            break;
+                        default:
+                            points = 0.0;
+                            break;
+                    }
+                    total_points += course.get_credits() * points;
+                    total_credits += course.get_credits();
+                    break;
+                }
+            }
+        }
+    }
+
+    GPA = total_points / total_credits;
 
     std::string student_str;
-    student_str = students[0].get_name(); // Change this to the selected student's name
+    student_str = selected_student->get_name(); // Change this to the selected student's name
 
     std::cout << "The GPA for " << student_str << " is " << GPA << std::endl;
     
