@@ -6,36 +6,37 @@
 #include <vector>
 #include "records.h"
 
+void initialize(StudentRecords&);
+
 int main(){
-    float GPA = 0.0f;
     int id;
+    StudentRecords SR;
 
-    std::vector<Student> students = {Student(1, "George P. Burdell"),
-                                    Student(2, "Nancy Rhodes")};
-
-    std::vector<Course> courses = {Course(1, "Algebra", 5),
-                                Course(2, "Physics", 4),
-                                Course(3, "English", 3),
-                                Course(4, "Economics", 4)};
-
-    std::vector<Grade> grades = {Grade(1, 1, 'B'), Grade(1, 2, 'A'), Grade(1, 3, 'C'),
-                                Grade(2, 1, 'A'), Grade(2, 2, 'A'), Grade(2, 4, 'B')};
+    initialize(SR);
 
     std::cout << "Enter a student ID: " << std::flush;
     std::cin >> id;
 
-    float points = 0.0f, credits = 0.0f;
-    for (Grade& grd : grades)
-        if (grd.get_student_id() == id){
-            // TODO: get numeric grade
-            // TODO: credits += get_credits
-            points += num_grd * courses[j].get_credits();
-        }
-    GPA = points / credits;
-
-    // TODO: get student name
-    std::cout << "The GPA for " << student_str << " is " << GPA << std::endl;
+    std::string student_str = SR.get_student_name(id);
+    std::cout << "The GPA for " << student_str << " is " << SR.get_GPA(id) << std::endl;
     
     std::cout << std::endl << std::endl;
     return (0);
+}
+
+void initialize(StudentRecords& srec){
+    srec.add_student(1, "George P. Burdell");
+    srec.add_student(2, "Nancy Rhodes");
+
+    srec.add_course(1, "Algebra", 5);
+    srec.add_course(2, "Physics", 4);
+    srec.add_course(3, "English", 3),
+    srec.add_course(4, "Economics", 4);
+
+    srec.add_grade(1, 1, 'B');
+    srec.add_grade(1, 2, 'A');
+    srec.add_grade(1, 3, 'C');
+    srec.add_grade(2, 1, 'A');
+    srec.add_grade(2, 2, 'A');
+    srec.add_grade(2, 4, 'B');
 }
