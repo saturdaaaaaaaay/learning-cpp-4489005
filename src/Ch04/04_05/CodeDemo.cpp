@@ -29,7 +29,7 @@ int main(){
         std::cout << "Enter a student ID: " << std::flush;
         std::cin >> id;
         
-        for (Student student : students) {
+        for (auto student : students) {
             if (id == student.get_id()) {
                 selected_student = new Student(student.get_id(), student.get_name());
                 valid_student = true;
@@ -42,32 +42,29 @@ int main(){
         }
     } while (!valid_student);
 
-    float total_points = 0.0;
-    float total_credits = 0.0;
+    float total_points = 0.0f;
+    float total_credits = 0.0f;
     auto student_id = selected_student->get_id();
-    for (Grade grade : grades) {
+    for (auto grade : grades) {
         if (grade.get_student_id() == student_id) {
-            for (Course course : courses) {
+            for (auto course : courses) {
                 if (course.get_id() == grade.get_course_id()) {
                     float points;
                     switch (grade.get_grade()) {
                         case 'A':
-                            points = 4.0;
+                            points = 4.0f;
                             break;
                         case 'B':
-                            points = 3.0;
+                            points = 3.0f;
                             break;
                         case 'C':
-                            points = 2.0;
+                            points = 2.0f;
                             break;
                         case 'D':
-                            points = 1.0;
-                            break;
-                        case 'F':
-                            points = 0.0;
+                            points = 1.0f;
                             break;
                         default:
-                            points = 0.0;
+                            points = 0.0f;
                             break;
                     }
                     total_points += course.get_credits() * points;
